@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { Survey } from './schemas/survey.schema';
 
+import { Query } from 'express-serve-static-core';
+
 @Injectable()
 export class SurveyService {
   constructor(
@@ -10,8 +12,22 @@ export class SurveyService {
     private surveyModel: mongoose.Model<Survey>,
   ) {}
 
-  async findAll(): Promise<Survey[]> {
-    const surveys = await this.surveyModel.find();
+  async findAll(query: Query): Promise<Survey[]> {
+    const resPerPage = 2;
+    const currentPage = Number(query.page) || 1;
+    const skip = resPerPage * (currentPage - 1);
+    const keyword = query.keyword
+      ? {
+          region: {
+            $regex: query.keyword,
+            $options: 'i',
+          },
+        }
+      : {};
+    const surveys = await this.surveyModel
+      .find({ ...keyword })
+      .limit(resPerPage)
+      .skip(skip);
     return surveys;
   }
 
