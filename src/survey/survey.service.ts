@@ -20,22 +20,21 @@ export class SurveyService {
     return res;
   }
 
-//   async findById(id: string): Promise<Survey> {
-//     const survey = await this.surveyModel.findById(id);
+  async findById(id: string): Promise<Survey> {
+    const survey = await this.surveyModel.findById(id);
 
-//     if (!survey) {
-//       throw new NotFoundException('Survey not found.');
-//     }
+    if (!survey) {
+      throw new NotFoundException('Survey not found.');
+    }
+    return survey;
+  }
 
-//     return survey;
-//   }
-
-//   async updateById(id: string, survey: Survey): Promise<Survey> {
-//     return await this.surveyModel.findByIdAndUpdate(id, survey, {
-//       new: true,
-//       runValidators: true,
-//     });
-//   }
+  async updateById(id: string, survey: Survey): Promise<Survey> {
+    return await this.surveyModel.findByIdAndUpdate(id, survey, {
+      new: true,
+      runValidators: true,
+    });
+  }
 
 //   async deleteById(id: string): Promise<Survey> {
 //     return await this.surveyModel.findByIdAndDelete(id);
