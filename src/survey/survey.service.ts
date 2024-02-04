@@ -36,7 +36,7 @@ export class SurveyService {
     });
   }
 
-//   async deleteById(id: string): Promise<Survey> {
-//     return await this.surveyModel.findByIdAndDelete(id);
-//   }
+  async deleteById(id: string): Promise<Survey> {
+    return await this.surveyModel.findByIdAndDelete(id);
+  }
 }

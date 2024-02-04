@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { SurveyService } from './survey.service';
 import { Survey } from './schemas/survey.schema';
 import { createSurveyDto } from './dto/create-survey.dto';
@@ -37,5 +45,13 @@ export class SurveyController {
     survey: UpdateSurveyDto,
   ): Promise<Survey> {
     return this.surveyService.updateById(id, survey);
+  }
+
+  @Delete(':id')
+  async deleteSurvey(
+    @Param('id')
+    id: string,
+  ): Promise<Survey> {
+    return this.surveyService.deleteById(id);
   }
 }
