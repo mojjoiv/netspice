@@ -1,4 +1,4 @@
-import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsEmpty, IsEnum, IsOptional, IsString } from 'class-validator';
 import {
   BirthArea,
   Bonus,
@@ -20,6 +20,7 @@ import {
   Supply,
   Vaccination,
 } from '../schemas/survey.schema';
+import { User } from 'src/auth/schemas/user.schema';
 
 export class UpdateSurveyDto {
   //vaccination dto
@@ -126,4 +127,7 @@ export class UpdateSurveyDto {
   @IsOptional()
   @IsEnum(Cprogram)
   readonly cprogram: Cprogram;
+
+  @IsEmpty({ message: 'you cannot pass user id' })
+  readonly user: User;
 }

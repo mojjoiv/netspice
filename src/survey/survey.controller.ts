@@ -7,6 +7,8 @@ import {
   Post,
   Put,
   Query,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { SurveyService } from './survey.service';
 import { Survey } from './schemas/survey.schema';
@@ -14,6 +16,7 @@ import { createSurveyDto } from './dto/create-survey.dto';
 import { UpdateSurveyDto } from './dto/update-survey.dto';
 
 import { Query as ExpressQuery } from 'express-serve-static-core';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('surveys')
 export class SurveyController {
@@ -25,11 +28,13 @@ export class SurveyController {
   }
 
   @Post()
+  @UseGuards(AuthGuard())
   async createSurvey(
     @Body()
     survey: createSurveyDto,
+    @Req() req,
   ): Promise<Survey> {
-    return this.surveyService.create(survey);
+    return this.surveyService.create(survey, req.user);
   }
 
   @Get(':id')

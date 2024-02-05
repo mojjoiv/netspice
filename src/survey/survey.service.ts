@@ -8,6 +8,7 @@ import * as mongoose from 'mongoose';
 import { Survey } from './schemas/survey.schema';
 
 import { Query } from 'express-serve-static-core';
+import { User } from 'src/auth/schemas/user.schema';
 
 @Injectable()
 export class SurveyService {
@@ -35,8 +36,9 @@ export class SurveyService {
     return surveys;
   }
 
-  async create(survey: Survey): Promise<Survey> {
-    const res = await this.surveyModel.create(survey);
+  async create(survey: Survey, user: User): Promise<Survey> {
+    const data = Object.assign(survey, { user: user._id });
+    const res = await this.surveyModel.create(data);
     return res;
   }
 
