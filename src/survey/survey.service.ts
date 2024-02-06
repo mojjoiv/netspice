@@ -51,7 +51,7 @@ export class SurveyService {
       });
       const res = await this.surveyModel.create(data);
 
-      console.log('Survey created successfully:', res);
+      // console.log('Survey created successfully:', res);
 
       return res;
     } catch (error) {
