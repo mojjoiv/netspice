@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { signUpDto } from './dto/signup.dto';
@@ -13,7 +13,7 @@ export class AuthController {
     return this.authService.signUp(signUpDto);
   }
 
-  @Get('/login')
+  @Post('/login') // Use @Post for login
   login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
     return this.authService.login(loginDto);
   }

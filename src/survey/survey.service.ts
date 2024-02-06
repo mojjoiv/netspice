@@ -18,7 +18,7 @@ export class SurveyService {
   ) {}
 
   async findAll(query: Query): Promise<Survey[]> {
-    const resPerPage = 2;
+    const resPerPage = 50;
     const currentPage = Number(query.page) || 1;
     const skip = resPerPage * (currentPage - 1);
     const keyword = query.keyword
@@ -37,7 +37,10 @@ export class SurveyService {
   }
 
   async create(survey: Survey, user: User): Promise<Survey> {
-    const data = Object.assign(survey, { user: user._id });
+    // Add user ID and name to the survey data
+    const data = Object.assign(survey, {
+      user: { id: user._id, name: user.name },
+    });
     const res = await this.surveyModel.create(data);
     return res;
   }
@@ -46,7 +49,7 @@ export class SurveyService {
     const isValidId = mongoose.isValidObjectId(id);
 
     if (!isValidId) {
-      throw new BadRequestException('please enter correct ID.');
+      throw new BadRequestException('Please enter a correct ID.');
     }
 
     const survey = await this.surveyModel.findById(id);
